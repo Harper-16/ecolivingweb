@@ -3,30 +3,64 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Learn practical tips and DIY projects for living a more sustainable, eco-friendly lifestyle." />
   <title>Eco-Friendly Living</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2d4739;
+      --accent: #4caf50;
+      --bg: #f0fdf4;
+      --white: #ffffff;
+      --shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
+    }
+
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #f4fdf7;
-      color: #2d4739;
+      background-color: var(--bg);
+      color: var(--primary);
       line-height: 1.6;
+    }
+
+    nav {
+      background: rgb(58, 90, 47);
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      box-shadow: var(--shadow);
+      z-index: 1000;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
     }
 
     header {
       background: url('eco-banner.jpg') center/cover no-repeat;
       height: 100vh;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: #2d4739;
       text-align: center;
       position: relative;
     }
@@ -34,82 +68,69 @@
     header::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.45);
+      inset: 0;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(8px);
+    }
+
+    header h1, header p {
+      position: relative;
       z-index: 1;
     }
 
     header h1 {
-      font-size: 3rem;
+      font-size: clamp(2rem, 6vw, 3.5rem);
       font-weight: 800;
-      z-index: 2;
     }
 
     header p {
-      font-size: 1.3rem;
-      margin-top: 10px;
-      z-index: 2;
-    }
-
-    nav {
-      background-color: #2d4739;
-      display: flex;
-      justify-content: flex-start;
-      gap: 2rem;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #dcedc8;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      margin-top: 1rem;
     }
 
     main {
-      padding: 2rem;
-    }
-
-    section {
-      margin-bottom: 3rem;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: auto;
     }
 
     h2 {
       text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      margin-bottom: 2rem;
+      color: var(--primary);
     }
 
     .tips-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      max-width: 1000px;
-      margin: 0 auto;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
     .tip {
-      background: #ffffff;
+      background: var(--white);
       padding: 1.5rem;
-      border-left: 6px solid #4caf50;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .tip.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .tip:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
 
     .tip h4 {
       margin-bottom: 0.5rem;
-      font-size: 1.1rem;
-      color: #2d4739;
+      font-size: 1.2rem;
+      color: var(--primary);
     }
 
     .tip p {
@@ -119,170 +140,187 @@
 
     .card-scroll {
       display: flex;
+      gap: 1rem;
       overflow-x: auto;
       scroll-snap-type: x mandatory;
-      gap: 1rem;
-      padding: 1rem;
+      padding-bottom: 1rem;
     }
 
     .card {
       flex: 0 0 auto;
       scroll-snap-align: start;
-      width: 250px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      border: 1px solid #c8e6c9;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      background: var(--white);
+      border-radius: 14px;
+      width: 260px;
       padding: 1rem;
-      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
     }
 
     .card img {
       width: 100%;
-      height: 150px;
+      height: 160px;
       object-fit: cover;
-      border-radius: 8px;
+      border-radius: 10px;
       margin-bottom: 1rem;
     }
 
     .contact-form {
+      background: var(--white);
+      padding: 2rem;
+      border-radius: 16px;
       max-width: 600px;
-      margin: 0 auto;
+      margin: auto;
+      box-shadow: var(--shadow);
       display: flex;
       flex-direction: column;
-      gap: 1rem;
-      background-color: #ffffff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      gap: 1.5rem;
+    }
+
+    .contact-form .form-group {
+      position: relative;
     }
 
     .contact-form input,
     .contact-form textarea {
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      border: 1px solid #c8e6c9;
+      width: 100%;
+      border: 1px solid #ccc;
       border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      resize: vertical;
+      padding: 1rem 1rem 0.5rem;
+      font-size: 1rem;
+      background: none;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .contact-form label {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      background: var(--white);
+      padding: 0 0.25rem;
+      color: #777;
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: 0.2s ease;
+    }
+
+    .contact-form input:focus + label,
+    .contact-form input:not(:placeholder-shown) + label,
+    .contact-form textarea:focus + label,
+    .contact-form textarea:not(:placeholder-shown) + label {
+      top: -0.6rem;
+      left: 0.8rem;
+      font-size: 0.75rem;
+      color: var(--primary);
     }
 
     .contact-form button {
-      background-color: #2d4739;
-      color: white;
+      background-color: var(--primary);
+      color: var(--white);
+      border: none;
       padding: 0.75rem;
       font-size: 1rem;
-      border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background 0.3s ease;
     }
 
     .contact-form button:hover {
-      background-color: #3c6e56;
+      background-color: #3a5d4a;
     }
 
     footer {
-      background-color: #2d4739;
-      color: white;
+      background: var(--primary);
+      color: var(--white);
       text-align: center;
-      padding: 1.5rem;
+      padding: 2rem 1rem;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+    }
+
+    /* Scroll animation */
+    @media (prefers-reduced-motion: no-preference) {
+      .tip {
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+    }
+    hr {
+      border: none;
+      height: 2px;
+      background: rgb(58, 90, 47);
+      width: 60px;
+      margin: 20px auto;
     }
   </style>
 </head>
 <body>
   <nav>
-    <a href="#home">HOME</a>
-    <a href="#tips">TIPS</a>
-    <a href="#projects">DIY PROJECTS</a>
-    <a href="#contact">CONTACT</a>
+    <a href="#home">Home</a>
+    <a href="#tips">Tips</a>
+    <a href="#projects">DIY Projects</a>
+    <a href="#contact">Contact</a>
   </nav>
 
   <header id="home">
-    <h1><i>Eco-Friendly Living</i></h1>
-    <p>Inspiring change, one green step at a time</p>
+    <div>
+      <h1><i>Eco-Friendly Living</i></h1>
+      <p>Inspiring change, one green step at a time</p>
+    </div>
   </header>
 
   <main>
     <section id="tips">
       <h2>🌱 Green Living Tips</h2>
       <div class="tips-grid">
-        <div class="tip">
-          <h4>Use Reusables</h4>
-          <p>Switch to reusable bags, water bottles, and containers to reduce single-use plastic waste.</p>
-        </div>
-        <div class="tip">
-          <h4>Compost Organics</h4>
-          <p>Turn your kitchen scraps and yard waste into nutrient-rich compost instead of sending it to landfills.</p>
-        </div>
-        <div class="tip">
-          <h4>Upgrade to LEDs</h4>
-          <p>Replace incandescent bulbs with energy-efficient LED lighting to cut down on electricity use.</p>
-        </div>
-        <div class="tip">
-          <h4>Support Local</h4>
-          <p>Buy from local farmers and artisans to reduce emissions caused by long-distance transportation.</p>
-        </div>
-        <div class="tip">
-          <h4>Eco Commute</h4>
-          <p>Bike, walk, or use public transport to reduce your carbon footprint from daily commuting.</p>
-        </div>
+        <div class="tip"><h4>Use Reusables</h4><p>Switch to reusable bags, bottles, and containers to reduce plastic waste.</p></div>
+        <div class="tip"><h4>Compost Organics</h4><p>Turn your kitchen scraps and yard waste into nutrient-rich compost.</p></div>
+        <div class="tip"><h4>Upgrade to LEDs</h4><p>Use energy-efficient lighting to reduce electricity use.</p></div>
+        <div class="tip"><h4>Support Local</h4><p>Buy local to reduce transport-related emissions.</p></div>
+        <div class="tip"><h4>Eco Commute</h4><p>Bike, walk, or use public transit when possible.</p></div>
+        <div class="tip"><h4>Save Water</h4><p>Fix leaks and install low-flow fixtures to conserve water.</p></div>
       </div>
     </section>
-
+<hr>
     <section id="projects">
       <h2>🌿 DIY Eco Projects</h2>
       <div class="card-scroll" id="diy-scroll">
-        <div class="card">
-          <img src="compost.jpg" alt="Compost Bin">
-          <h4>DIY Compost Bin</h4>
-          <p>Cost: Free</p>
-        </div>
-        <div class="card">
-          <img src="clothbags.jpg" alt="Reusable Bags">
-          <h4>Reusable Cloth Bags</h4>
-          <p>Cost: $2</p>
-        </div>
-        <div class="card">
-          <img src="ecocleaner.jpg" alt="Eco Cleaner">
-          <h4>Homemade Eco Cleaner</h4>
-          <p>Cost: $3</p>
-        </div>
-        <div class="card">
-          <img src="plantpot.jpg" alt="Recycled Plant Pot">
-          <h4>Recycled Plant Pot</h4>
-          <p>Cost: $1</p>
-        </div>
-        <div class="card">
-          <img src="solarlantern.jpg" alt="Solar Lantern">
-          <h4>Solar Jar Lantern</h4>
-          <p>Cost: $5</p>
-        </div>
-        <div class="card">
-          <img src="paperpots.jpg" alt="Paper Seed Pots">
-          <h4>Paper Seed Pots</h4>
-          <p>Cost: Free</p>
-        </div>
+        <div class="card"><img src="compost.jpg" alt="DIY compost bin"><h4>Compost Bin</h4><p>Cost: Free</p></div>
+        <div class="card"><img src="clothbags.jpg" alt="Cloth bags"><h4>Cloth Bags</h4><p>Cost: $2</p></div>
+        <div class="card"><img src="ecocleaner.jpg" alt="Eco cleaner spray"><h4>Eco Cleaner</h4><p>Cost: $3</p></div>
+        <div class="card"><img src="plantpot.jpg" alt="Recycled plant pot"><h4>Plant Pot</h4><p>Cost: $1</p></div>
+        <div class="card"><img src="solarlantern.jpg" alt="Solar jar lantern"><h4>Solar Lantern</h4><p>Cost: $5</p></div>
+        <div class="card"><img src="paperpots.jpg" alt="Seed starter pots"><h4>Seed Pots</h4><p>Cost: Free</p></div>
       </div>
     </section>
-
+<hr>
     <section id="contact">
       <h2>📬 Contact Us</h2>
-      <p style="text-align: center; max-width: 600px; margin: 0 auto 2rem;">Have eco-friendly ideas, feedback, or collaboration opportunities? Drop us a message below!</p>
       <form class="contact-form">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <div class="form-group">
+          <input type="text" id="name" placeholder=" " required />
+          <label for="name">Your Name</label>
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" placeholder=" " required />
+          <label for="email">Your Email</label>
+        </div>
+        <div class="form-group">
+          <textarea id="message" rows="5" placeholder=" " required></textarea>
+          <label for="message">Your Message</label>
+        </div>
         <button type="submit">Send Message</button>
       </form>
     </section>
   </main>
-
-  <footer>
-    <p>&copy; 2025 Eco-Friendly Living | Designed for a greener tomorrow</p>
-  </footer>
+<hr>
 
   <script>
+    // Auto-scroll the DIY card section
     const scrollContainer = document.getElementById('diy-scroll');
     let scrollAmount = 0;
     const step = 270;
@@ -295,6 +333,16 @@
       }
       scrollContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
     }, interval);
+
+    // Animate tips
+    const tips = document.querySelectorAll('.tip');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    tips.forEach(tip => observer.observe(tip));
   </script>
 </body>
 </html>
